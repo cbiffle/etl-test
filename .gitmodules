@@ -1,0 +1,9 @@
+[submodule "etl"]
+	path = etl
+	url = ../etl
+[submodule "3p/gtest/upstream"]
+	path = 3p/gtest/upstream
+	url = cliffle.com:git/gtest.git
+[submodule "build"]
+	path = build
+	url = cliffle.com:git/3p/socialhacker-build
