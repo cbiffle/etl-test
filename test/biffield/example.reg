@@ -1,0 +1,8 @@
+// vim:syntax=cpp:
+
+ETL_BFF_REG_RW(uint32_t, foo,
+  ETL_BFF_FIELD(31:16, uint16_t, top)
+  ETL_BFF_FIELD(15: 0, uint16_t, bottom)
+  
+  ETL_BFF_FIELD(31: 0, uint32_t, all)
+)
