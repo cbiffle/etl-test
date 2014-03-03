@@ -1,7 +1,11 @@
 #include "etl/armv7m/exception_table.h"
 #include "etl/common/attribute_macros.h"
 
+#include "etl/armv7m/nvic.h"
+#include "etl/armv7m/scb.h"
+
 ETL_NORETURN void etl_armv7m_reset_handler() {
+  etl::armv7m::scb.enable_faults();
   while (1);
 }
 
