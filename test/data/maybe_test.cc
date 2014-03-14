@@ -13,7 +13,7 @@ TEST(Maybe, Basic) {
   m = 42;
 
   ASSERT_TRUE(!!m);
-  ASSERT_EQ(42, m.Get());
+  ASSERT_EQ(42, m.ref());
 
   m = nothing;
 
