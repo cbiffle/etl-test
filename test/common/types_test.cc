@@ -22,4 +22,16 @@ static_assert(IsSame<Size, decltype(sizeof(char(0)))>::value,
 static_assert(IsSame<Size, decltype(alignof(char(0)))>::value,
               "Size must be the type of alignof.");
 
+/*
+ * Sanity check on our explicitly-sized integer types.
+ */
+#define CHECK_INTEGER_TYPE(size) \
+  static_assert(sizeof(etl::common::Int ## size) * 8 == size, \
+                "The Int" #size " type must contain " #size " bits.");
+
+CHECK_INTEGER_TYPE(8)
+CHECK_INTEGER_TYPE(16)
+CHECK_INTEGER_TYPE(32)
+CHECK_INTEGER_TYPE(64)
+
 int main() { return 0; }
