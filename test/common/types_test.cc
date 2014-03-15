@@ -5,33 +5,32 @@
 
 using etl::common::IsSame;
 using etl::common::IsUnqualifiedIntegral;
+using etl::common::IsSigned;
 using etl::common::IsUnsigned;
-using etl::common::Size;
-
-/*
- * Since Size is intended to parallel size_t, we test the following properties
- * of size_t:
- *
- *  "std::size_t is the unsigned integer type of the result of the sizeof
- *   operator and the alignof operator."
- */
-static_assert(IsUnqualifiedIntegral<Size>::value, "Size must be integral.");
-static_assert(IsUnsigned<Size>::value, "Size must be unsigned.");
-static_assert(IsSame<Size, decltype(sizeof(char(0)))>::value,
-              "Size must be the type of sizeof.");
-static_assert(IsSame<Size, decltype(alignof(char(0)))>::value,
-              "Size must be the type of alignof.");
 
 /*
  * Sanity check on our explicitly-sized integer types.
  */
 #define CHECK_INTEGER_TYPE(size) \
   static_assert(sizeof(etl::common::Int ## size) * 8 == size, \
-                "The Int" #size " type must contain " #size " bits.");
+                "The Int" #size " type must contain " #size " bits."); \
+  static_assert(IsSigned<etl::common::Int ## size>::value, \
+                "The Int" #size " type should be signed.")
 
-CHECK_INTEGER_TYPE(8)
-CHECK_INTEGER_TYPE(16)
-CHECK_INTEGER_TYPE(32)
-CHECK_INTEGER_TYPE(64)
+CHECK_INTEGER_TYPE(8);
+CHECK_INTEGER_TYPE(16);
+CHECK_INTEGER_TYPE(32);
+CHECK_INTEGER_TYPE(64);
+
+#define CHECK_UNSIGNED_TYPE(size) \
+  static_assert(sizeof(etl::common::UInt ## size) * 8 == size, \
+                "The UInt" #size " type must contain " #size " bits."); \
+  static_assert(IsUnsigned<etl::common::UInt ## size>::value, \
+                "The UInt" #size " type should be unsigned.")
+
+CHECK_UNSIGNED_TYPE(8);
+CHECK_UNSIGNED_TYPE(16);
+CHECK_UNSIGNED_TYPE(32);
+CHECK_UNSIGNED_TYPE(64);
 
 int main() { return 0; }
