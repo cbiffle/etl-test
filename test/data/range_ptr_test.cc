@@ -2,6 +2,8 @@
 
 #include "etl/data/range_ptr.h"
 
+#include <type_traits>
+
 using etl::data::RangePtr;
 using etl::common::Size;
 
@@ -23,6 +25,9 @@ static_assert(a_range.first(3).base() == &some_integers[0],
               "first(n) must not change base address.");
 static_assert(a_range.first(3).count() == 3,
               "first(n) must yield n elements.");
+
+static_assert(std::is_literal_type<RangePtr<int>>::value,
+              "RangePtr should be a literal type.");
 
 /*******************************************************************************
  * Dynamic tests - these must be executed.
