@@ -18,6 +18,12 @@ static_assert(a_range.count() == sizeof(some_integers) / sizeof(int),
 static_assert(a_range.byte_length() == sizeof(some_integers),
               "byte_length() must parallel sizeof.");
 
+static_assert(a_range.first(3).base() == &some_integers[0],
+              "first(n) must not change base address.");
+static_assert(a_range.first(3).count() == 3,
+              "first(n) must yield n elements.");
+
+
 /*******************************************************************************
  * Dynamic tests - these must be executed.
  */
@@ -49,6 +55,14 @@ TEST(RangePtr, ConversionToConst) {
 
   // Statically, this verifies that comparison of distinct types works.
   ASSERT_EQ(range, const_range);
+}
+
+TEST(RangePtr, SliceBoundaries) {
+  int integers[12];
+  RangePtr<int> range = integers;
+  auto slice = range.slice(1, 6);
+
+  ASSERT_EQ(5, slice.count()) << "Slice should take indices, not a length.";
 }
 
 int main(int argc, char *argv[]) {
