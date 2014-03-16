@@ -3,6 +3,7 @@
 #include "etl/data/range_ptr.h"
 
 using etl::data::RangePtr;
+using etl::common::Size;
 
 
 /*******************************************************************************
@@ -22,7 +23,6 @@ static_assert(a_range.first(3).base() == &some_integers[0],
               "first(n) must not change base address.");
 static_assert(a_range.first(3).count() == 3,
               "first(n) must yield n elements.");
-
 
 /*******************************************************************************
  * Dynamic tests - these must be executed.
@@ -63,6 +63,49 @@ TEST(RangePtr, SliceBoundaries) {
   auto slice = range.slice(1, 6);
 
   ASSERT_EQ(5, slice.count()) << "Slice should take indices, not a length.";
+}
+
+/*******************************************************************************
+ * Policy tests
+ */
+
+void assert_throw(bool condition) {
+  if (!condition) throw std::exception();
+}
+
+constexpr bool constexpr_assert(bool condition) {
+  return condition ? true : (assert_throw(condition), false);
+}
+
+struct ExceptionRangeCheckPolicy {
+  static constexpr Size check_index(Size index, Size count) {
+    return constexpr_assert(index < count), index;
+  }
+
+  static constexpr Size check_slice_start(Size st, Size en, Size count) {
+    return constexpr_assert(st <= count), st;
+  }
+
+  static constexpr Size check_slice_end(Size st, Size en, Size count) {
+    return constexpr_assert(st <= en && en <= count), en;
+  }
+};
+
+typedef RangePtr<int, ExceptionRangeCheckPolicy> CheckedIntRangePtr;
+
+constexpr CheckedIntRangePtr checked_range = some_integers;
+
+// Some future test framework should include a way to assert that something
+// doesn't compile.  This shouldn't (and doesn't at this writing):
+// constexpr int * foo = &checked_range[12];
+
+TEST(RangePtr, CheckedAccess) {
+  int integers[12];
+  CheckedIntRangePtr range = integers;
+
+  integers[0] = 42;
+  ASSERT_EQ(42, range[0]);
+  ASSERT_THROW(range[12], std::exception);
 }
 
 int main(int argc, char *argv[]) {
