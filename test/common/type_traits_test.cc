@@ -18,7 +18,7 @@ using etl::common::RemoveQualifiers;
  * Check our qualifier-removing templates.
  */
 #define CHECK_TYPE_DERIVE(src, op, dst) \
-  static_assert(IsSame<dst, typename op<src>::type>::value, \
+  static_assert(IsSame<dst, typename op<src>::Type>::value, \
                 "Applying " #op " to " #src " should yield " #dst)
 
 CHECK_TYPE_DERIVE(int, RemoveConst, int);
@@ -40,7 +40,7 @@ CHECK_TYPE_DERIVE(int const volatile, RemoveQualifiers, int);
  * Check our qualifier-transfer templates.
  */
 #define CHECK_TYPE_TRANSFER(src1, src2, op, dst) \
-  static_assert(IsSame<dst, typename op<src1, src2>::type>::value, \
+  static_assert(IsSame<dst, typename op<src1, src2>::Type>::value, \
                 #op "<" #src1 ", " #src2 "> should yield " #dst)
 
 CHECK_TYPE_TRANSFER(int, bool, MatchConst, bool);
@@ -66,7 +66,7 @@ CHECK_TYPE_TRANSFER(int const volatile, bool, MatchQualifiers,
  */
 #define CHECK_MAKEUNSIGNED_ENUM(bits) \
   enum TestEnum ## bits : etl::common::Int ## bits {}; \
-  typedef typename MakeUnsigned<TestEnum ## bits>::type UnsignedEnum ## bits; \
+  typedef typename MakeUnsigned<TestEnum ## bits>::Type UnsignedEnum ## bits; \
   static_assert(IsUnsigned<UnsignedEnum ## bits>::value, \
                 "MakeUnsigned on an enum should yield an unsigned type."); \
   static_assert(sizeof(UnsignedEnum ## bits) \
