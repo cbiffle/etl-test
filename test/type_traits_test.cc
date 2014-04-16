@@ -1,18 +1,18 @@
-#include "etl/common/types.h"
-#include "etl/common/type_traits.h"
+#include "etl/types.h"
+#include "etl/type_traits.h"
 
 #include <cstddef>
 
-using etl::common::IsSame;
-using etl::common::IsUnqualifiedIntegral;
-using etl::common::IsUnsigned;
-using etl::common::MakeUnsigned;
-using etl::common::MatchConst;
-using etl::common::MatchVolatile;
-using etl::common::MatchQualifiers;
-using etl::common::RemoveConst;
-using etl::common::RemoveVolatile;
-using etl::common::RemoveQualifiers;
+using etl::IsSame;
+using etl::IsUnqualifiedIntegral;
+using etl::IsUnsigned;
+using etl::MakeUnsigned;
+using etl::MatchConst;
+using etl::MatchVolatile;
+using etl::MatchQualifiers;
+using etl::RemoveConst;
+using etl::RemoveVolatile;
+using etl::RemoveQualifiers;
 
 /*
  * Check our qualifier-removing templates.
@@ -65,12 +65,12 @@ CHECK_TYPE_TRANSFER(int const volatile, bool, MatchQualifiers,
  * Check the operation of MakeUnsigned on enum types.
  */
 #define CHECK_MAKEUNSIGNED_ENUM(bits) \
-  enum TestEnum ## bits : etl::common::Int ## bits {}; \
+  enum TestEnum ## bits : etl::Int ## bits {}; \
   typedef typename MakeUnsigned<TestEnum ## bits>::Type UnsignedEnum ## bits; \
   static_assert(IsUnsigned<UnsignedEnum ## bits>::value, \
                 "MakeUnsigned on an enum should yield an unsigned type."); \
   static_assert(sizeof(UnsignedEnum ## bits) \
-                    == sizeof(etl::common::UInt ## bits), \
+                    == sizeof(etl::UInt ## bits), \
                 "MakeUnsigned on an enum must leave size unchanged.")
 
 CHECK_MAKEUNSIGNED_ENUM(8);

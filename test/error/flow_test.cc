@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
 #include "etl/error/flow.h"
-#include "etl/common/type_traits.h"
+#include "etl/type_traits.h"
 
-using etl::common::IsSame;
+using etl::IsSame;
 
 /*
  * Error type for testing purposes.

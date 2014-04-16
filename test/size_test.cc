@@ -1,13 +1,13 @@
-#include "etl/common/size.h"
-#include "etl/common/type_traits.h"
+#include "etl/size.h"
+#include "etl/type_traits.h"
 
 #include <cstddef>
 
-using etl::common::IsSame;
-using etl::common::IsUnqualifiedIntegral;
-using etl::common::IsUnsigned;
-using etl::common::MakeUnsigned;
-using etl::common::Size;
+using etl::IsSame;
+using etl::IsUnqualifiedIntegral;
+using etl::IsUnsigned;
+using etl::MakeUnsigned;
+using etl::Size;
 
 /*
  * Since Size is intended to parallel size_t, we test the following properties

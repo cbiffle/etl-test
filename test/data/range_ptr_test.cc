@@ -5,7 +5,7 @@
 #include <type_traits>
 
 using etl::data::RangePtr;
-using etl::common::Size;
+using etl::Size;
 
 
 /*******************************************************************************

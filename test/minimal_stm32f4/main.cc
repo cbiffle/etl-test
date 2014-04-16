@@ -1,5 +1,5 @@
 #include "etl/armv7m/exception_table.h"
-#include "etl/common/attribute_macros.h"
+#include "etl/attribute_macros.h"
 
 #include "etl/armv7m/nvic.h"
 #include "etl/armv7m/scb.h"
