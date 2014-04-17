@@ -3,36 +3,9 @@
 #include "etl/error/flow.h"
 #include "etl/type_traits.h"
 
+#include "test_error.h"
+
 using etl::IsSame;
-
-/*
- * Error type for testing purposes.
- */
-
-enum class TestError {
-  ok = 0,
-  failure_1 = 1,
-  failure_2 = 2,
-};
-
-namespace etl {
-  namespace error {
-    template <>
-    struct Strategy<TestError> {
-      static constexpr bool is_error_type = true;
-
-      static constexpr bool is_bad(TestError e) {
-        return e != TestError::ok;
-      }
-
-      static constexpr TestError move_error(TestError e) { return e; }
-
-      // This causes CHECK to become void, preventing use in expression
-      // contexts.
-      static void move_success(TestError) {}
-    };
-  }
-}
 
 TestError success_func() { return TestError::ok; }
 TestError failure1_func() { return TestError::failure_1; }
