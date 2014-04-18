@@ -358,6 +358,9 @@ TEST(Maybe, EmptyComparisons) {
 
   ASSERT_FALSE(empty1 == full);
   ASSERT_TRUE(empty1 != full);
+
+  ASSERT_TRUE(empty1 == nothing);
+  ASSERT_TRUE(nothing == empty1);
 }
 
 int main(int argc, char *argv[]) {
