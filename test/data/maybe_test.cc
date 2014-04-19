@@ -363,6 +363,19 @@ TEST(Maybe, EmptyComparisons) {
   ASSERT_TRUE(nothing == empty1);
 }
 
+Maybe<int> make_int(bool f) {
+  if (f) {
+    return Maybe<int>(3);
+  } else {
+    return nothing;
+  }
+}
+
+TEST(Maybe, ReturnFromFn) {
+  Maybe<int> x = make_int(true);
+  ASSERT_EQ(3, x.ref());
+}
+
 int main(int argc, char *argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
