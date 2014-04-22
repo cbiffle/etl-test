@@ -74,7 +74,7 @@ TEST(RangePtr, SliceBoundaries) {
  * Policy tests
  */
 
-void assert_throw(bool condition) {
+static void assert_throw(bool condition) {
   if (!condition) throw std::exception();
 }
 

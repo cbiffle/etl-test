@@ -81,7 +81,7 @@ struct LifeSpy {
 
 unsigned LifeSpy::instances_alive = 0;
 
-LifeSpy make_life_spy() {
+static LifeSpy make_life_spy() {
   return LifeSpy();
 }
 
@@ -363,7 +363,7 @@ TEST(Maybe, EmptyComparisons) {
   ASSERT_TRUE(nothing == empty1);
 }
 
-Maybe<int> make_int(bool f) {
+static Maybe<int> make_int(bool f) {
   if (f) {
     return Maybe<int>(3);
   } else {

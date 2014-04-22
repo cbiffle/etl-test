@@ -7,9 +7,9 @@
 
 using etl::IsSame;
 
-TestError success_func() { return TestError::ok; }
-TestError failure1_func() { return TestError::failure_1; }
-TestError failure2_func() { return TestError::failure_2; }
+static TestError success_func() { return TestError::ok; }
+static TestError failure1_func() { return TestError::failure_1; }
+static TestError failure2_func() { return TestError::failure_2; }
 
 TEST(CHECK, Basic) {
   TestError e = [] {
