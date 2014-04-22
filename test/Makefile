@@ -1,5 +1,6 @@
 depth := ..
-products := subdirs size_test types_test type_traits_test
+products := size_test types_test type_traits_test
+subdirectories := *
 
 size_test[type] := program
 size_test[cc_files] := size_test.cc
@@ -18,8 +19,5 @@ type_traits_test[cc_files] := type_traits_test.cc
 type_traits_test[cc_flags] := -std=gnu++0x -I$(depth)
 type_traits_test[libs] := \
   etl:etl
-
-
-subdirs[type] := subdirectories
 
 include $(depth)/build/Makefile.rules

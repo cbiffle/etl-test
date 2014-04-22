@@ -1,7 +1,7 @@
 depth := ../..
 products := test
 
-test[type] := gtest
+test[type] := test
 test[cc_files] := test.cc
 test[cc_flags] := -std=gnu++0x -I$(depth)
 test[libs] := \

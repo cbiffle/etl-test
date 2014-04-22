@@ -1,6 +1,5 @@
 depth := .
-products := subdirs
-
-subdirs[type] := subdirectories
+products :=
+subdirectories := *
 
 include $(depth)/build/Makefile.rules
