@@ -1,5 +1,5 @@
 depth := ../..
-products := gtest
+products := gtest pthread
 
 gtest[type] := library
 
@@ -15,7 +15,9 @@ gtest[using_c_flags] := \
   -isystem $(shell pwd)/upstream/include \
   -DGTEST_OS_LINUX
 
-gtest[l_flags] := -lpthread
-gtest[using_l_flags] := -lpthread
+gtest[libs] := 3p/gtest:pthread
+
+pthread[type] := library
+pthread[using_l_flags] := -lpthread
 
 include $(depth)/build/Makefile.rules

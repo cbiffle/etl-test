@@ -375,8 +375,3 @@ TEST(Maybe, ReturnFromFn) {
   Maybe<int> x = make_int(true);
   ASSERT_EQ(3, x.ref());
 }
-
-int main(int argc, char *argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

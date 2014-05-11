@@ -112,8 +112,3 @@ TEST(RangePtr, CheckedAccess) {
   ASSERT_EQ(42, range[0]);
   ASSERT_THROW(range[12], std::exception);
 }
-
-int main(int argc, char *argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

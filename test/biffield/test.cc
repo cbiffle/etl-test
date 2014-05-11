@@ -29,8 +29,3 @@ TEST(Biffield, Basic) {
 
   EXPECT_EQ(0xDEADBEEF, ex.read_foo().get_all());
 }
-
-int main(int argc, char *argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

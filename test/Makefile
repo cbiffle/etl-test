@@ -1,23 +1,28 @@
 depth := ..
-products := size_test types_test type_traits_test
+products := test_lib all_tests
 subdirectories := *
 
-size_test[type] := program
-size_test[cc_files] := size_test.cc
-size_test[cc_flags] := -std=gnu++0x -I$(depth)
-size_test[libs] := \
+test_lib[type] := library
+test_lib[cc_files] := \
+  size_test.cc \
+  types_test.cc \
+  type_traits_test.cc
+test_lib[cc_flags] := -std=gnu++0x -I$(depth)
+test_lib[libs] := \
   etl:etl
 
-types_test[type] := program
-types_test[cc_files] := types_test.cc
-types_test[cc_flags] := -std=gnu++0x -I$(depth)
-types_test[libs] := \
-  etl:etl
+test_libs := \
+  test:test_lib \
+  test/biffield:tests \
+  test/data:tests \
+  test/error:tests
 
-type_traits_test[type] := program
-type_traits_test[cc_files] := type_traits_test.cc
-type_traits_test[cc_flags] := -std=gnu++0x -I$(depth)
-type_traits_test[libs] := \
-  etl:etl
+all_tests[type] := test
+all_tests[cc_files] := main.cc
+all_tests[cc_flags] := -std=gnu++0x -I$(depth)
+all_tests[libs] := \
+  $(test_libs) \
+  3p/gtest:gtest
+all_tests[whole_archive] := $(test_libs)
 
 include $(depth)/build/Makefile.rules

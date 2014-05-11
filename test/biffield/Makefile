@@ -1,10 +1,10 @@
 depth := ../..
-products := test
+products := tests
 
-test[type] := test
-test[cc_files] := test.cc
-test[cc_flags] := -std=gnu++0x -I$(depth)
-test[libs] := \
+tests[type] := library
+tests[cc_files] := test.cc
+tests[cc_flags] := -std=gnu++0x -I$(depth)
+tests[libs] := \
   etl/biffield:biffield \
   3p/gtest:gtest
 

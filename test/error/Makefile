@@ -1,10 +1,10 @@
 depth := ../..
-products := flow_test
+products := tests
 
-flow_test[type] := test
-flow_test[cc_files] := flow_test.cc
-flow_test[cc_flags] := -std=gnu++0x -I$(depth)
-flow_test[libs] := \
+tests[type] := library
+tests[cc_files] := flow_test.cc
+tests[cc_flags] := -std=gnu++0x -I$(depth)
+tests[libs] := \
   etl/error:error \
   3p/gtest:gtest
 

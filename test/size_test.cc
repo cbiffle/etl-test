@@ -22,5 +22,3 @@ static_assert(IsSame<Size, decltype(sizeof(char(0)))>::value,
               "Size must be the type of sizeof.");
 static_assert(IsSame<Size, decltype(alignof(char(0)))>::value,
               "Size must be the type of alignof.");
-
-int main() { return 0; }

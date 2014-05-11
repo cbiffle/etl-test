@@ -31,8 +31,3 @@ TEST(CATCH, Basic) {
   }();
   ASSERT_EQ(TestError::failure_2, e);
 }
-
-int main(int argc, char *argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
