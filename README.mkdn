@@ -2,3 +2,22 @@ ETL Tests
 =========
 
 This contains test and example code for the ETL.
+
+To prepare a fresh clone, run bootstrap.sh.
+
+To build:
+
+    $ cd build
+    $ ./cobble build
+
+To run tests:
+
+    $ cd build
+    $ latest/test/all_tests
+
+To clean:
+
+    $ rm -rf build
+
+In case of weird sticky build failures involving Python stack traces, clean and
+re-run bootstrap.sh.
