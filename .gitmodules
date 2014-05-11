@@ -1,9 +1,9 @@
 [submodule "etl"]
 	path = etl
-	url = ../etl
+	url = https://github.com/cbiffle/etl.git
 [submodule "3p/gtest/upstream"]
 	path = 3p/gtest/upstream
-	url = cliffle.com:git/gtest.git
+	url = http://git.chromium.org/external/googletest.git
 [submodule "build"]
 	path = build
 	url = cliffle.com:git/3p/socialhacker-build
