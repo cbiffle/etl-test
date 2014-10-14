@@ -2,6 +2,7 @@
 #include "etl/type_traits.h"
 
 #include <cstddef>
+#include <climits>
 
 using etl::IsSame;
 using etl::IsUnqualifiedIntegral;
@@ -13,6 +14,12 @@ using etl::MatchQualifiers;
 using etl::RemoveConst;
 using etl::RemoveVolatile;
 using etl::RemoveQualifiers;
+
+/*
+ * Check determination of type bit width.
+ */
+static_assert(etl::char_bits == CHAR_BIT,
+              "char_bits / CHAR_BIT mismatch");
 
 /*
  * Check our qualifier-removing templates.
