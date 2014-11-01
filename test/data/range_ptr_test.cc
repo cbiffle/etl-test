@@ -1,8 +1,9 @@
+#include <stdexcept>
+#include <type_traits>
+
 #include <gtest/gtest.h>
 
 #include "etl/data/range_ptr.h"
-
-#include <type_traits>
 
 using etl::data::RangePtr;
 using etl::Size;
@@ -74,31 +75,25 @@ TEST(RangePtr, SliceBoundaries) {
  * Policy tests
  */
 
-static void assert_throw(bool condition) {
-  if (!condition) throw std::exception();
-}
+template <typename T>
+using RangePtrX = RangePtr<T, etl::data::AssertRangeCheckPolicy>;
 
-constexpr bool constexpr_assert(bool condition) {
-  return condition ? true : (assert_throw(condition), false);
-}
+constexpr RangePtrX<int> checked_range = some_integers;
 
-struct ExceptionRangeCheckPolicy {
-  static constexpr Size check_index(Size index, Size count) {
-    return constexpr_assert(index < count), index;
-  }
+static_assert(checked_range.base() == &some_integers[0],
+              "RangePtr must capture array base address.");
+static_assert(checked_range.count() == sizeof(some_integers) / sizeof(int),
+              "RangePtr must capture array count.");
+static_assert(checked_range.byte_length() == sizeof(some_integers),
+              "byte_length() must parallel sizeof.");
 
-  static constexpr Size check_slice_start(Size st, Size en, Size count) {
-    return constexpr_assert(st <= count), st;
-  }
+static_assert(checked_range.first(3).base() == &some_integers[0],
+              "first(n) must not change base address.");
+static_assert(checked_range.first(3).count() == 3,
+              "first(n) must yield n elements.");
 
-  static constexpr Size check_slice_end(Size st, Size en, Size count) {
-    return constexpr_assert(st <= en && en <= count), en;
-  }
-};
-
-typedef RangePtr<int, ExceptionRangeCheckPolicy> CheckedIntRangePtr;
-
-constexpr CheckedIntRangePtr checked_range = some_integers;
+static_assert(std::is_literal_type<RangePtrX<int>>::value,
+              "RangePtrX should be a literal type.");
 
 // Some future test framework should include a way to assert that something
 // doesn't compile.  This shouldn't (and doesn't at this writing):
@@ -106,9 +101,9 @@ constexpr CheckedIntRangePtr checked_range = some_integers;
 
 TEST(RangePtr, CheckedAccess) {
   int integers[12];
-  CheckedIntRangePtr range = integers;
+  RangePtrX<int> range = integers;
 
   integers[0] = 42;
   ASSERT_EQ(42, range[0]);
-  ASSERT_THROW(range[12], std::exception);
+  ASSERT_THROW(range[12], std::logic_error);
 }

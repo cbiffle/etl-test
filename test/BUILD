@@ -1,3 +1,12 @@
+c_library('assert_throw',
+  sources = [
+    'assert_throw.cc',
+  ],
+  deps = [
+    '//etl',
+  ],
+)
+
 gtest_case('tests',
   sources = [
     'size_test.cc',

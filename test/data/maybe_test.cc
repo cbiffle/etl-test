@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include <gtest/gtest.h>
 
 #include "etl/data/maybe.h"
@@ -374,4 +376,22 @@ static Maybe<int> make_int(bool f) {
 TEST(Maybe, ReturnFromFn) {
   Maybe<int> x = make_int(true);
   ASSERT_EQ(3, x.ref());
+}
+
+
+/*******************************************************************************
+ * Policy Tests
+ */
+
+template <typename T>
+using MaybeX = Maybe<T, etl::data::AssertMaybeCheckPolicy>;
+
+TEST(MaybeAssert, Basic) {
+  MaybeX<int> x(3);
+  ASSERT_EQ(3, x.ref());
+}
+
+TEST(MaybeAssert, Incorrect) {
+  MaybeX<int> x(nothing);
+  ASSERT_THROW(x.ref(), std::logic_error);
 }

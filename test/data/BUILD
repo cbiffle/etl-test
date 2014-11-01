@@ -5,5 +5,6 @@ gtest_case('tests',
   ],
   deps = [
     '//etl/data',
+    '//test:assert_throw',
   ],
 )
