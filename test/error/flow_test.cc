@@ -1,11 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "etl/error/flow.h"
-#include "etl/type_traits.h"
 
 #include "test_error.h"
-
-using etl::IsSame;
 
 static TestError success_func() { return TestError::ok; }
 static TestError failure1_func() { return TestError::failure_1; }

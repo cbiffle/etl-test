@@ -6,7 +6,6 @@
 #include "etl/data/range_ptr.h"
 
 using etl::data::RangePtr;
-using etl::Size;
 
 
 /*******************************************************************************
