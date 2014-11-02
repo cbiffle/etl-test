@@ -9,6 +9,7 @@ ENTRY(etl_armv7m_reset_handler)
 SECTIONS {
   .etl_armv7m_vector_table : {
     KEEP(*(.etl_armv7m_exception_table*))
+    KEEP(*(.etl_stm32f4xx_interrupt_table*))
   } >rom
 
   . = ALIGN(4);
