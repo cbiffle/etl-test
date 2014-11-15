@@ -10,6 +10,7 @@ c_library('assert_throw',
 gtest_case('tests',
   sources = [
     'non_null_test.cc',
+    'scope_guard_test.cc',
     'type_traits_test.cc',
   ],
   deps = [
