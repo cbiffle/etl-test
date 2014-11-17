@@ -70,6 +70,41 @@ TEST(RangePtr, SliceBoundaries) {
   ASSERT_EQ(5, slice.count()) << "Slice should take indices, not a length.";
 }
 
+TEST(RangePtr, IteratorBegin) {
+  int integers[4];
+  auto b = RangePtr<int>(integers).begin();
+
+  ASSERT_NE(RangePtr<int>(integers).end(), b);
+
+  for (int i = 0; i < 4; ++i) {
+    ASSERT_EQ(&integers[i], &*b);
+    ++b;
+  }
+}
+
+TEST(RangePtr, IteratorEnd) {
+  int integers[4];
+  auto e = RangePtr<int>(integers).end();
+
+  // Note that we're explicitly using a lax policy, so we can get away with
+  // the following:
+  ASSERT_EQ(&integers[4], &*e);
+}
+
+TEST(RangePtr, IterationSyntax) {
+  int integers[4] { 0, 1, 2, 3 };
+  RangePtr<int> range = integers;
+
+  // Yeah, maintaining an index alongside a range-based for loop is silly,
+  // but in this case we're testing the range-based for loop.
+  int i = 0;
+  for (int x : range) {
+    ASSERT_EQ(integers[i], x);
+    ++i;
+  }
+}
+
+
 /*******************************************************************************
  * Policy tests
  */
@@ -117,4 +152,21 @@ TEST(RangePtr, CheckedSlice) {
 TEST(RangePtr, CheckedEmpty) {
   RangePtrX<int> range;
   ASSERT_THROW(range[0], std::logic_error);
+}
+
+TEST(RangePtr, CheckedIteration) {
+  int integers[4] { 0, 1, 2, 3 };
+  auto b = RangePtrX<int>(integers).begin();
+  auto e = RangePtrX<int>(integers).end();
+
+  ASSERT_EQ(0, *b);
+  ASSERT_THROW(*e, std::logic_error);
+  ASSERT_THROW(++e, std::logic_error);
+
+  for (unsigned i = 0; b != e; ++b, ++i) {
+    ASSERT_EQ(integers[i], *b);
+  }
+
+  ASSERT_THROW(*b, std::logic_error);
+  ASSERT_THROW(++b, std::logic_error);
 }
