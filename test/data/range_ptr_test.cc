@@ -106,3 +106,15 @@ TEST(RangePtr, CheckedAccess) {
   ASSERT_EQ(42, range[0]);
   ASSERT_THROW(range[12], std::logic_error);
 }
+
+TEST(RangePtr, CheckedSlice) {
+  int integers[12];
+  RangePtrX<int> range = integers;
+  range = range.slice(12, 12);
+  ASSERT_EQ(0, range.count());
+}
+
+TEST(RangePtr, CheckedEmpty) {
+  RangePtrX<int> range;
+  ASSERT_THROW(range[0], std::logic_error);
+}
