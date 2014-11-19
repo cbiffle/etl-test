@@ -74,3 +74,15 @@ static_assert(std::is_same<uint8_t, etl::UnsignedIntOfSize<1>>::value, "");
 static_assert(std::is_same<uint16_t, etl::UnsignedIntOfSize<2>>::value, "");
 static_assert(std::is_same<uint32_t, etl::UnsignedIntOfSize<4>>::value, "");
 static_assert(std::is_same<uint64_t, etl::UnsignedIntOfSize<8>>::value, "");
+
+// Min size
+template <std::size_t N>
+using MinInts = etl::SelectByMinSize<N, uint8_t, uint16_t, uint32_t, uint64_t>;
+
+static_assert(std::is_same<MinInts<1>, uint8_t>::value, "");
+static_assert(std::is_same<MinInts<2>, uint16_t>::value, "");
+static_assert(std::is_same<MinInts<3>, uint32_t>::value, "");
+static_assert(std::is_same<MinInts<4>, uint32_t>::value, "");
+static_assert(std::is_same<MinInts<5>, uint64_t>::value, "");
+static_assert(std::is_same<MinInts<7>, uint64_t>::value, "");
+static_assert(std::is_same<MinInts<8>, uint64_t>::value, "");
