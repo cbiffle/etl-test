@@ -9,6 +9,7 @@ c_library('assert_throw',
 
 gtest_case('tests',
   sources = [
+    'bits_test.cc',
     'integer_sequence_test.cc',
     'invoke_test.cc',
     'non_null_test.cc',
