@@ -20,7 +20,18 @@ gtest_case('tests',
 )
 
 gtest_runner('all_tests',
-  environment = 'hosted',
+  environment = 'hosted-gcc',
+  sources = [ 'main.cc' ],
+  deps = [
+    ':tests',
+    '//test/biffield:tests',
+    '//test/data:tests',
+    '//test/error:tests',
+  ],
+)
+
+gtest_runner('all_tests_clang',
+  environment = 'hosted-clang',
   sources = [ 'main.cc' ],
   deps = [
     ':tests',
