@@ -13,6 +13,7 @@ gtest_case('tests',
     'invoke_test.cc',
     'non_null_test.cc',
     'scope_guard_test.cc',
+    'type_list_test.cc',
     'type_traits_test.cc',
   ],
   deps = [
