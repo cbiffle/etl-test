@@ -70,6 +70,14 @@ TEST(RangePtr, SliceBoundaries) {
   ASSERT_EQ(5, slice.count()) << "Slice should take indices, not a length.";
 }
 
+TEST(RangePtr, TailFrom) {
+  int integers[12];
+  RangePtr<int> range = integers;
+
+  ASSERT_EQ(10, range.tail_from(2).count());
+  ASSERT_EQ(12, range.slice(0, 4).count() + range.tail_from(4).count());
+}
+
 TEST(RangePtr, IteratorBegin) {
   int integers[4];
   auto b = RangePtr<int>(integers).begin();
