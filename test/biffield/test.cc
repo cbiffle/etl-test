@@ -29,3 +29,15 @@ TEST(Biffield, Basic) {
 
   EXPECT_EQ(0xDEADBEEF, ex.read_foo().get_all());
 }
+
+TEST(Biffield, AtomicUpdate) {
+  ex.write_foo(Example::foo_value_t()
+               .with_top(0xDEAD)
+               .with_bottom(0xBEEF));
+
+  ex.update_foo([] (Example::foo_value_t v) {
+      return v.with_top(0x600D);
+  });
+
+  EXPECT_EQ(0x600DBEEF, ex.read_foo().get_all());
+}
