@@ -29,3 +29,18 @@ CHECK_TYPE_TRANSFER(int const volatile, bool, etl::MatchQualifiers,
                     bool const volatile);
 
 #undef CHECK_TYPE_TRANSFER
+
+/*
+ * SizeOf/AlignOf metafunctions -- too simple to fail, perhaps, but we must
+ * instantiate them to see if they even compile.
+ */
+
+template <typename T>
+struct CheckSizeOfAlignOf {
+  static_assert(etl::SizeOf<T>::value == sizeof(T), "");
+  static_assert(etl::AlignOf<T>::value == alignof(T), "");
+};
+
+template struct CheckSizeOfAlignOf<char>;
+template struct CheckSizeOfAlignOf<int>;
+template struct CheckSizeOfAlignOf<long long>;
