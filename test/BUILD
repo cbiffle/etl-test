@@ -16,6 +16,7 @@ gtest_case('tests',
     'scope_guard_test.cc',
     'type_list_test.cc',
     'type_traits_test.cc',
+    'utility_test.cc',
   ],
   deps = [
     '//etl:etl',
