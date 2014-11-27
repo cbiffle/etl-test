@@ -40,8 +40,30 @@ static_assert(
                  TypeList<signed char, signed int>::Map<std::make_unsigned>
                  >::value, "");
 
-// Searching
+// Searching by predicate, returning the type.
 static_assert(
     std::is_same<char *,
                  TypeList<int, char *, bool, void *>::FindFirst<std::is_pointer>
                  >::value, "");
+
+// Searching by identity, returning the index.
+static_assert(TypeList<int, bool, char>::index_of<int>() == 0, "");
+static_assert(TypeList<int, bool, char>::index_of<bool>() == 1, "");
+static_assert(TypeList<int, bool, char>::index_of<char>() == 2, "");
+
+// Checking uniqueness.
+static_assert(TypeList<>::all_unique, "");
+static_assert(TypeList<int>::all_unique, "");
+static_assert(TypeList<int, bool, char>::all_unique, "");
+static_assert(TypeList<int, bool, int>::all_unique == false, "");
+
+// Checking containment.
+static_assert(TypeList<>::contains<int>() == false, "");
+static_assert(TypeList<char>::contains<int>() == false, "");
+static_assert(TypeList<int>::contains<int>(), "");
+static_assert(TypeList<char, bool>::contains<int>() == false, "");
+static_assert(TypeList<char, int>::contains<int>(), "");
+
+// Deriving aggregate properties.
+static_assert(etl::MaxSizeOf<TypeList<int>>::value == sizeof(int), "");
+static_assert(etl::MaxAlignOf<TypeList<int>>::value == alignof(int), "");
