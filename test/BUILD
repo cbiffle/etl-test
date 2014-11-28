@@ -31,6 +31,7 @@ gtest_runner('all_tests',
     '//test/biffield:tests',
     '//test/data:tests',
     '//test/error:tests',
+    '//test/mem:tests',
   ],
 )
 
@@ -42,5 +43,6 @@ gtest_runner('all_tests_clang',
     '//test/biffield:tests',
     '//test/data:tests',
     '//test/error:tests',
+    '//test/mem:tests',
   ],
 )
