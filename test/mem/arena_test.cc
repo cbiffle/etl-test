@@ -6,16 +6,16 @@ namespace etl {
 namespace mem {
 
 TEST(ArenaTest, CreateEmptyOkay) {
-  Arena arena({});
+  Arena<> arena({});
 }
 
 TEST(ArenaTest, ResetEmptyOkay) {
-  Arena arena({});
+  Arena<> arena({});
   arena.reset();
 }
 
 TEST(ArenaTest, AllocateEmptyFails) {
-  Arena arena({});
+  Arena<> arena({});
   arena.reset();
 
   ASSERT_THROW(arena.allocate(1), std::logic_error);
@@ -24,7 +24,7 @@ TEST(ArenaTest, AllocateEmptyFails) {
 TEST(ArenaTest, OneRegionEmptyBeforeReset) {
   alignas(Region) uint8_t mem[sizeof(Region)];
   Region regions[] { mem };
-  Arena arena(regions);
+  Arena<> arena(regions);
 
   ASSERT_EQ(0, arena.get_total_count());
   ASSERT_EQ(0, arena.get_free_count());
@@ -35,7 +35,7 @@ TEST(ArenaTest, OneRegionEmptyBeforeReset) {
 TEST(ArenaTest, OneRegionAfterReset) {
   alignas(Region) uint8_t mem[sizeof(Region)];
   Region regions[] { mem };
-  Arena arena(regions);
+  Arena<> arena(regions);
   arena.reset();
 
   ASSERT_EQ(sizeof(Region), arena.get_total_count());
@@ -49,7 +49,7 @@ TEST(ArenaTest, TwoRegionsAfterReset) {
   uint8_t mem2[32];
 
   Region regions[] { mem1, mem2 };
-  Arena arena(regions);
+  Arena<> arena(regions);
   arena.reset();
 
   ASSERT_EQ(64 + 32, arena.get_total_count());
@@ -65,7 +65,7 @@ protected:
 
   Region region_table[3] { {region1}, {region2}, {region3} };
 
-  Arena arena{region_table};
+  Arena<> arena{region_table};
 
   virtual void SetUp() {
     arena.reset();
@@ -125,6 +125,54 @@ TEST_F(ArenaTest_ThreeRegions, ResetAfterAllocate) {
   ASSERT_EQ(expected_total_size, arena.get_total_count());
   ASSERT_EQ(expected_total_size - region_count * sizeof(Region),
             arena.get_free_count());
+}
+
+TEST(ArenaNullptrPolicyTest, AllocateReturnsNullptrOnFailure) {
+  Arena<ReturnNullptrOnAllocationFailure> arena({});
+  arena.reset();
+
+  ASSERT_EQ(nullptr, arena.allocate(1));
+}
+
+TEST(ArenaDeallocatePolicyTest, ResetWithoutAllocationWorks) {
+  alignas(Region) uint8_t mem[sizeof(Region)];
+  Region regions[] { mem };
+  Arena<AssertOnAllocationFailure, RequireMatchingDeallocation> arena(regions);
+
+  arena.reset();  // initial
+  arena.reset();  // again!
+}
+
+TEST(ArenaDeallocatePolicyTest, ResetWithMatchedCallsWorks) {
+  alignas(Region) uint8_t mem[64];
+  Region regions[] { mem };
+  Arena<AssertOnAllocationFailure, RequireMatchingDeallocation> arena(regions);
+  arena.reset();  // initial
+
+  void * p = arena.allocate(4);
+  arena.deallocate(p);
+  arena.reset();
+}
+
+TEST(ArenaDeallocatePolicyTest, ResetWithLeakAsserts) {
+  alignas(Region) uint8_t mem[64];
+  Region regions[] { mem };
+  Arena<AssertOnAllocationFailure, RequireMatchingDeallocation> arena(regions);
+  arena.reset();  // initial
+
+  arena.allocate(4);
+  ASSERT_THROW(arena.reset(), std::logic_error);
+}
+
+TEST(ArenaDeallocatePolicyTest, OverFreeAsserts) {
+  alignas(Region) uint8_t mem[64];
+  Region regions[] { mem };
+  Arena<AssertOnAllocationFailure, RequireMatchingDeallocation> arena(regions);
+  arena.reset();  // initial
+
+  void * p = arena.allocate(4);
+  arena.deallocate(p);
+  ASSERT_THROW(arena.deallocate(p), std::logic_error);
 }
 
 }  // namespace mem
