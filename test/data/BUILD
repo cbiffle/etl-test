@@ -3,6 +3,7 @@ gtest_case('tests',
     'crc32_test.cc',
     'maybe_test.cc',
     'range_ptr_test.cc',
+    'sort_test.cc',
   ],
   deps = [
     '//etl/data',
