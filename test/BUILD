@@ -31,8 +31,12 @@ gtest_runner('all_tests',
     '//test/biffield:tests',
     '//test/data:tests',
     '//test/error:tests',
+    '//test/math:tests',
     '//test/mem:tests',
   ],
+  extra = {
+    'etl_config_use_toolchain_trig': True,
+  },
 )
 
 gtest_runner('all_tests_clang',
@@ -43,6 +47,10 @@ gtest_runner('all_tests_clang',
     '//test/biffield:tests',
     '//test/data:tests',
     '//test/error:tests',
+    '//test/math:tests',
     '//test/mem:tests',
   ],
+  extra = {
+    'etl_config_use_toolchain_trig': True,
+  },
 )
