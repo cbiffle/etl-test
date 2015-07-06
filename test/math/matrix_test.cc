@@ -37,6 +37,14 @@ static constexpr auto expected_ab = Matrix<3, 2, int> {{
 
 static_assert(a * b == expected_ab, "");
 
+static constexpr auto expected_trans_a = Matrix<2, 3, int> {{
+  {4, 0, 1},
+  {8, 2, 6},
+}};
+
+static_assert(transpose(a) == expected_trans_a, "");
+
+
 
 static constexpr auto expected_translate = Matrix<4, 4, int> {{
   {1, 0, 0, 3},
@@ -47,12 +55,13 @@ static constexpr auto expected_translate = Matrix<4, 4, int> {{
 
 static_assert(translate(Vec3f{3, 4, 5}) == expected_translate, "");
 
-static constexpr auto expected_trans_a = Matrix<2, 3, int> {{
-  {4, 0, 1},
-  {8, 2, 6},
+static constexpr auto expected_scale = Matrix<4, 4, int> {{
+  {10, 0, 0, 0},
+  {0, 20, 0, 0},
+  {0, 0, 30, 0},
+  {0, 0, 0, 1},
 }};
-
-static_assert(transpose(a) == expected_trans_a, "");
+static_assert(scale(Vec3f{10,20,30}) == expected_scale, "");
 
 }  // namespace math
 }  // namespace etl
