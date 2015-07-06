@@ -39,7 +39,7 @@ namespace _field_name_tests {
   static_assert(v4.z == 3.f, "");
   static_assert(v4.w == 4.f, "");
 
-  static constexpr auto v5 = Vector<5, float>{1.f, 2.f, 3.f, 4.f, 5.f};
+  static constexpr auto v5 = Vector<5, float>{1.f, 2, 3.f, 4.f, 5.f};
   static_assert(v5.get<0>() == 1.f, "");
   static_assert(v5.get<1>() == 2.f, "");
   static_assert(v5.get<2>() == 3.f, "");
