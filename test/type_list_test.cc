@@ -26,6 +26,9 @@ struct A {};
 struct B {};
 struct C {};
 
+// Repetition
+static_assert(std::is_same<etl::Repeat<A, 3>, TypeList<A, A, A>>::value, "");
+
 // Sizing
 static_assert(TypeList<A, B, C>::size() == 3, "");
 
