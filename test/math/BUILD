@@ -1,5 +1,6 @@
 gtest_case('tests',
   sources = [
+    'matrix_test.cc',
     'vector_test.cc',
   ],
   deps = [
