@@ -185,28 +185,46 @@ TEST(Vector, sub_eq3) {
   ASSERT_EQ((Vec3f{-3.f, -3.f, -3.f}), v);
 }
 
-TEST(Vector, mul3) {
+TEST(Vector, parallel_mul_3) {
   ASSERT_EQ(
       (Vec3f{4.f, 10.f, 18.f}),
-      (Vec3f{4.f, 5.f, 6.f} * Vec3f{1.f, 2.f, 3.f}));
+      parallel_mul(Vec3f{4.f, 5.f, 6.f}, Vec3f{1.f, 2.f, 3.f}));
+}
+
+TEST(Vector, mul_left3) {
+  ASSERT_EQ(
+      (Vec3f{16.f, 20.f, 24.f}),
+      (4.f * Vec3f{4.f, 5.f, 6.f}));
+}
+
+TEST(Vector, mul_right3) {
+  ASSERT_EQ(
+      (Vec3f{16.f, 20.f, 24.f}),
+      (Vec3f{4.f, 5.f, 6.f} * 4.f));
 }
 
 TEST(Vector, mul_eq3) {
   auto v = Vec3f{1.f, 2.f, 3.f};
-  v *= Vec3f{4.f, 5.f, 6.f};
-  ASSERT_EQ((Vec3f{4.f, 10.f, 18.f}), v);
+  v *= 5.f;
+  ASSERT_EQ((Vec3f{5.f, 10.f, 15.f}), v);
 }
 
-TEST(Vector, div3) {
+TEST(Vector, div_left3) {
   ASSERT_EQ(
-      (Vec3f{4.f/1.f, 5.f/2.f, 6.f/3.f}),
-      (Vec3f{4.f, 5.f, 6.f} / Vec3f{1.f, 2.f, 3.f}));
+      (Vec3f{1/4.f, 1/5.f, 1/6.f}),
+      (1.f / Vec3f{4.f, 5.f, 6.f}));
+}
+
+TEST(Vector, div_right3) {
+  ASSERT_EQ(
+      (Vec3f{4.f/2, 5.f/2, 6.f/2}),
+      (Vec3f{4.f, 5.f, 6.f} / 2.f));
 }
 
 TEST(Vector, div_eq3) {
   auto v = Vec3f{1.f, 2.f, 3.f};
-  v /= Vec3f{4.f, 5.f, 6.f};
-  ASSERT_EQ((Vec3f{1/4.f, 2/5.f, 3/6.f}), v);
+  v /= 4.f;
+  ASSERT_EQ((Vec3f{1/4.f, 2/4.f, 3/4.f}), v);
 }
 
 
