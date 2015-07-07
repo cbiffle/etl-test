@@ -13,8 +13,8 @@ namespace math {
  */
 
 static constexpr auto id2 = Matrix<2, 2, int>::identity();
-static_assert(id2.row[0] == transpose(Vec2i{1, 0}), "");
-static_assert(id2.row[1] == transpose(Vec2i{0, 1}), "");
+static_assert(id2.row[0] == transposed(Vec2i{1, 0}), "");
+static_assert(id2.row[1] == transposed(Vec2i{0, 1}), "");
 
 static_assert(id2 * Vec2i{3, 4} == Vec2i{3, 4}, "");
 
@@ -42,7 +42,7 @@ static constexpr auto expected_trans_a = Matrix<2, 3, int> {
   {8, 2, 6},
 };
 
-static_assert(transpose(a) == expected_trans_a, "");
+static_assert(transposed(a) == expected_trans_a, "");
 
 
 

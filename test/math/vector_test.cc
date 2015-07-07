@@ -214,11 +214,11 @@ TEST(Vector, div_eq3) {
  * Vector-specific operations, i.e. not simple lifts of C operators.
  */
 
-TEST(Vector, transpose) {
+TEST(Vector, transposed) {
   auto col = Vec3f { 1.f, 1.f, 1.f };
-  auto row = transpose(col);
+  auto row = transposed(col);
   ASSERT_EQ(Orient::row, Orient(decltype(row)::orient));
-  auto col2 = transpose(row);
+  auto col2 = transposed(row);
   ASSERT_EQ(Orient::col, Orient(decltype(col2)::orient));
   ASSERT_EQ(col, col2);
 }
