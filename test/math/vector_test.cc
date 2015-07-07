@@ -233,5 +233,10 @@ TEST(Vector, cross) {
             cross(Vec3f{0.f, 1.f, 0.f}, Vec3f{0.f, 0.f, 1.f}));
 }
 
+TEST(Vector, normalized) {
+  UVec3f n = normalized(Vec3f{1,2,3});
+  ASSERT_FLOAT_EQ(1.f, norm(n));
+}
+
 }  // namespace math
 }  // namespace etl
