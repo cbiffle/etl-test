@@ -114,6 +114,11 @@ TEST(Vector, horizontal) {
       horizontal(Vec2f { 1.f, 2.f }, [](float a, float b) { return a + b; }));
 }
 
+TEST(Vector, horizontal_associativity) {
+  ASSERT_EQ((1.f / 2) / 3,
+      horizontal(Vec3f{1, 2, 3}, [](float a, float b) { return a / b; }));
+}
+
 
 /*******************************************************************************
  * Parallel combinator template tests.
