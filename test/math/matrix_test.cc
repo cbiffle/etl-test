@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 
 #include "etl/math/matrix.h"
-#include "etl/math/affine.h"
 
 namespace etl {
 namespace math {
@@ -43,25 +42,6 @@ static constexpr auto expected_trans_a = Matrix<2, 3, int> {
 };
 
 static_assert(transposed(a) == expected_trans_a, "");
-
-
-
-static constexpr auto expected_translate = Matrix<4, 4, int> {
-  {1, 0, 0, 3},
-  {0, 1, 0, 4},
-  {0, 0, 1, 5},
-  {0, 0, 0, 1},
-};
-
-static_assert(translate(Vec3f{3, 4, 5}) == expected_translate, "");
-
-static constexpr auto expected_scale = Matrix<4, 4, int> {
-  {10, 0, 0, 0},
-  {0, 20, 0, 0},
-  {0, 0, 30, 0},
-  {0, 0, 0, 1},
-};
-static_assert(scale(Vec3f{10,20,30}) == expected_scale, "");
 
 }  // namespace math
 }  // namespace etl
