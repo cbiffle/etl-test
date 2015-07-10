@@ -258,7 +258,7 @@ TEST(Vector, cross) {
 
 TEST(Vector, normalized) {
   UVec3f n = normalized(Vec3f{1,2,3});
-  ASSERT_FLOAT_EQ(1.f, norm(n));
+  ASSERT_FLOAT_EQ(1.f, mag(n));
 }
 
 }  // namespace math
