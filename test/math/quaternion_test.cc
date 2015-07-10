@@ -30,18 +30,18 @@ TEST(UnitQuaternion, rotation_from_axis_angle_nonunit) {
   auto p = Vec3f{1, 0, 0};          // Start along X axis.
   auto r = Vec3f{0, 1, 0};          // Expect to end up along Y axis.
 
-  ASSERT_NEAR(0.f, mag(r - u.rotate(p)), tolerance);
+  ASSERT_NEAR(0.f, mag(r - rotate(u, p)), tolerance);
 }
 
 TEST(UnitQuaternion, rotation_from_axis_angle_unit) {
-  auto axis = UVec3f::from_arbitrary(Vec3f{0, 0, 1});
+  auto axis = UVec3f::from_unchecked(Vec3f{0, 0, 1});
   auto angle = float(M_PI) / 2;     // Quarter rotation.
   auto u = rotation(axis, angle);
 
   auto p = Vec3f{1, 0, 0};          // Start along X axis.
   auto r = Vec3f{0, 1, 0};          // Expect to end up along Y axis.
 
-  ASSERT_NEAR(0.f, mag(r - u.rotate(p)), tolerance);
+  ASSERT_NEAR(0.f, mag(r - rotate(u, p)), tolerance);
 }
 
 TEST(UnitQuaternion, rotation_from_vectors_nonunit) {
@@ -49,15 +49,15 @@ TEST(UnitQuaternion, rotation_from_vectors_nonunit) {
   constexpr auto end = Vec3f{0, 1, 0};
   auto u = rotation(start, end);
 
-  ASSERT_NEAR(0.f, mag(end - u.rotate(start)), tolerance);
+  ASSERT_NEAR(0.f, mag(end - rotate(u, start)), tolerance);
 }
 
 TEST(UnitQuaternion, rotation_from_vectors_unit) {
-  constexpr auto start = UVec3f::from_arbitrary(Vec3f{1, 0, 0});
-  constexpr auto end = UVec3f::from_arbitrary(Vec3f{0, 1, 0});
+  constexpr auto start = UVec3f::from_unchecked(Vec3f{1, 0, 0});
+  constexpr auto end = UVec3f::from_unchecked(Vec3f{0, 1, 0});
   auto u = rotation(start, end);
 
-  ASSERT_NEAR(0.f, mag(end - u.rotate(start)), tolerance);
+  ASSERT_NEAR(0.f, mag(end - rotate(u, start)), tolerance);
 }
 
 
