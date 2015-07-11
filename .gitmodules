@@ -3,7 +3,7 @@
 	url = https://github.com/cbiffle/etl.git
 [submodule "3p/gtest/upstream"]
 	path = 3p/gtest/upstream
-	url = http://git.chromium.org/external/googletest.git
+	url = https://git.chromium.org/external/googletest.git
 [submodule "cobble"]
 	path = cobble
 	url = https://github.com/cbiffle/cobble-build.git
