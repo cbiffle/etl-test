@@ -23,6 +23,10 @@ static constexpr auto a = Matrix<3, 2, int> {
   {1, 6},
 };
 
+static_assert(get<0, 0>(a) == 4, "");
+static_assert(get<0, 1>(a) == 8, "");
+static_assert(get<1, 1>(a) == 2, "");
+
 static constexpr auto b = Matrix<2, 2, int> {
   {5, 2},
   {9, 4},
